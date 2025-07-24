@@ -1,0 +1,20 @@
+{
+    "app": {
+      "title": "My Medicine Cabinet",
+      "welcome": "Stay healthy — check expiry dates on time!"
+    },
+    "navigation": {
+      "home": "Home",
+      "add": "Add"
+    },
+    "form": {
+      "name": "Name",
+      "expiration": "Expiry date",
+      "quantity": "Number of packs",
+      "save": "Save"
+    },
+    "buttons": {
+      "add": "Add medicine",
+      "back": "Back"
+    }
+}

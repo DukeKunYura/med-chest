@@ -1,7 +1,7 @@
+import AddMedicinePage from '@/pages/AddMedicinePage';
+import MedicineListPage from '@/pages/MedicineListPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
-import AddScreen from '../screens/AddScreen';
 
 export type RootStackParamList = {
     Home: undefined;
@@ -16,12 +16,12 @@ export default function AppNavigation() {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen
                     name="Home"
-                    component={HomeScreen}
+                    component={MedicineListPage}
                     options={{ title: 'Моя Аптечка' }}
                 />
                 <Stack.Screen
                     name="Add"
-                    component={AddScreen}
+                    component={AddMedicinePage}
                     options={{ title: 'Добавить лекарство' }}
                 />
             </Stack.Navigator>

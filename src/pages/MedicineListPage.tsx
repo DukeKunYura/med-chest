@@ -1,6 +1,7 @@
 import { View, Text, Button, StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 type RootStackParamList = {
     Home: undefined;
@@ -9,14 +10,16 @@ type RootStackParamList = {
 
 type HomeScreenNavigationProp = NavigationProp<RootStackParamList, 'Home'>;
 
-export default function HomeScreen() {
+export default function MedicineListPage() {
+    const { t } = useTranslation();
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Главная</Text>
+            <Text style={styles.title}>{t('app.title')}</Text>
+            <Text>{t('app.welcome')}</Text>
             <Button
-                title="Перейти к добавлению"
+                title={t('buttons.add')}
                 onPress={() => navigation.navigate('Add')}
             />
         </View>
