@@ -19,6 +19,9 @@
       "typescriptreact"
     ],
     "eslint.run": "onType",
-    "eslint.format.enable": true
+    "eslint.format.enable": true,
+    "i18n-ally.localesPaths": [
+        "src/shared/assets/locales"
+    ]
 
   }
