@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import {
-    View,
     Text,
+    FlatList,
     StyleSheet,
-    Pressable,
+    Alert,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Colors from '@/shared/constants/Colors';
-import { LinearGradient } from 'expo-linear-gradient';
-import { MedicineList } from '@/widgets/medicineList';
-import { ChestInfo } from '@/widgets/chestInfo';
+import { MedicineItem } from './MedicineItem';
 
 // Мок-данные
 const mockMedicines = [
@@ -31,32 +28,45 @@ const mockMedicines = [
     { id: '16', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
 ];
 
-export default function MedicineListPage() {
+export const MedicineList = () => {
     const [medicines, setMedicines] = useState(mockMedicines);
-    const navigation = useNavigation();
+
+    const handleDelete = (id: string) => {
+        Alert.alert(
+            'Удалить?',
+            'Вы уверены, что хотите удалить это лекарство?',
+            [
+                { text: 'Отмена', style: 'cancel' },
+                {
+                    text: 'Удалить',
+                    style: 'destructive',
+                    onPress: () => setMedicines(medicines.filter((m) => m.id !== id)),
+                },
+            ]
+        );
+    };
 
     return (
-        <View style={localStyles.container}>
-            <Text style={localStyles.title}>Моя Аптечка</Text>
 
-            <ChestInfo />
+        <FlatList
+            data={medicines}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+                <MedicineItem
+                    item={item}
+                    onPress={() => {
+                        Alert.alert('Подробнее', `${item.name}\nСрок: ${item.expirationDate}`);
+                    }}
+                />
+            )}
+            contentContainerStyle={localStyles.list}
+            ListEmptyComponent={
+                <Text style={localStyles.empty}>Аптечка пуста. Добавьте первое лекарство.</Text>
+            }
+        />
 
-            <MedicineList />
-
-            <LinearGradient
-                colors={['transparent', Colors.background]}
-                style={localStyles.gradient}
-                pointerEvents="none"
-            />
-            <Pressable
-                style={localStyles.addButton}
-                onPress={() => navigation.navigate('Add' as never)}
-            >
-                <Text style={localStyles.addButtonText}>Добавить лекарство</Text>
-            </Pressable>
-        </View>
     );
-}
+};
 
 const localStyles = StyleSheet.create({
     container: {
@@ -77,6 +87,13 @@ const localStyles = StyleSheet.create({
         marginHorizontal: 16,
         marginBottom: 12,
         gap: 12,
+    },
+    horizontalPadding: {
+        // ❌ УДАЛЯЕМ paddingHorizontal отсюда
+        // Оно больше не нужно
+    },
+    list: {
+        // contentContainerStyle — теперь без внешних отступов
     },
     empty: {
         textAlign: 'center',

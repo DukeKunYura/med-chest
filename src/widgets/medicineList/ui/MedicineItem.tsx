@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
     StyleSheet,
     Pressable,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Colors from '@/shared/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MedicineList } from '@/widgets/medicineList';
-import { ChestInfo } from '@/widgets/chestInfo';
 
-// Мок-данные
 const mockMedicines = [
     { id: '1', name: 'Парацетамол', expirationDate: '2025-03-15', quantity: 2, category: 'Анальгетики' },
     { id: '2', name: 'Анальгин', expirationDate: '2024-11-30', quantity: 1, category: 'Анальгетики' },
@@ -31,32 +27,41 @@ const mockMedicines = [
     { id: '16', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
 ];
 
-export default function MedicineListPage() {
-    const [medicines, setMedicines] = useState(mockMedicines);
-    const navigation = useNavigation();
+export const MedicineItem = ({ item, onPress }: { item: typeof mockMedicines[0]; onPress: () => void }) => {
+    const today = new Date().toISOString().split('T')[0];
+    const isExpired = item.expirationDate < today;
+    const isExpiringSoon =
+      !isExpired && item.expirationDate <= new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+
+    // Определяем цвета градиента
+    const gradientColors = isExpired
+        ? ['#ffdbde', '#fff0f5'] // красный → светло-красный
+        : isExpiringSoon
+            ? [Colors.warning, '#f9ca24'] // жёлтый → светло-жёлтый
+            : ['#e0e0e0', '#ffffff']; // серый → белый
 
     return (
-        <View style={localStyles.container}>
-            <Text style={localStyles.title}>Моя Аптечка</Text>
-
-            <ChestInfo />
-
-            <MedicineList />
-
+        <Pressable onPress={onPress} style={localStyles.listItem}>
+            {/* Градиент на весь фон карточки */}
             <LinearGradient
-                colors={['transparent', Colors.background]}
-                style={localStyles.gradient}
-                pointerEvents="none"
+                colors={gradientColors}
+                style={StyleSheet.absoluteFillObject} // растягиваем на всю карточку
+                start={{ x: 0, y: 0 }} // слева
+                end={{ x: 1, y: 0 }}   // направо
             />
-            <Pressable
-                style={localStyles.addButton}
-                onPress={() => navigation.navigate('Add' as never)}
-            >
-                <Text style={localStyles.addButtonText}>Добавить лекарство</Text>
-            </Pressable>
-        </View>
+
+            {/* Контент поверх градиента */}
+            <View style={localStyles.itemContent}>
+                <Text style={localStyles.itemName} numberOfLines={1}>
+                    {item.name}
+                </Text>
+                <Text style={localStyles.itemMeta}>
+                    {item.quantity} уп.
+                </Text>
+            </View>
+        </Pressable>
     );
-}
+};
 
 const localStyles = StyleSheet.create({
     container: {
@@ -77,6 +82,13 @@ const localStyles = StyleSheet.create({
         marginHorizontal: 16,
         marginBottom: 12,
         gap: 12,
+    },
+    horizontalPadding: {
+        // ❌ УДАЛЯЕМ paddingHorizontal отсюда
+        // Оно больше не нужно
+    },
+    list: {
+        // contentContainerStyle — теперь без внешних отступов
     },
     empty: {
         textAlign: 'center',

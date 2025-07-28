@@ -22,6 +22,9 @@
     "eslint.format.enable": true,
     "i18n-ally.localesPaths": [
         "src/shared/assets/locales"
+    ],
+    "cSpell.words": [
+        "Pressable"
     ]
 
   }
