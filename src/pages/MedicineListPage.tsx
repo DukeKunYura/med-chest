@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -11,28 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MedicineList } from '@/widgets/medicineList';
 import { ChestInfo } from '@/widgets/chestInfo';
 
-// Мок-данные
-const mockMedicines = [
-    { id: '1', name: 'Парацетамол', expirationDate: '2025-03-15', quantity: 2, category: 'Анальгетики' },
-    { id: '2', name: 'Анальгин', expirationDate: '2024-11-30', quantity: 1, category: 'Анальгетики' },
-    { id: '3', name: 'Витамин C', expirationDate: '2026-01-10', quantity: 5 },
-    { id: '4', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
-    { id: '5', name: 'Парацетамол', expirationDate: '2025-03-15', quantity: 2, category: 'Анальгетики' },
-    { id: '6', name: 'Анальгин', expirationDate: '2024-11-30', quantity: 1, category: 'Анальгетики' },
-    { id: '7', name: 'Витамин C', expirationDate: '2026-01-10', quantity: 5 },
-    { id: '8', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
-    { id: '9', name: 'Парацетамол', expirationDate: '2025-03-15', quantity: 2, category: 'Анальгетики' },
-    { id: '10', name: 'Анальгин', expirationDate: '2024-11-30', quantity: 1, category: 'Анальгетики' },
-    { id: '11', name: 'Витамин C', expirationDate: '2026-01-10', quantity: 5 },
-    { id: '12', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
-    { id: '13', name: 'Парацетамол', expirationDate: '2025-03-15', quantity: 2, category: 'Анальгетики' },
-    { id: '14', name: 'Анальгин', expirationDate: '2024-11-30', quantity: 1, category: 'Анальгетики' },
-    { id: '15', name: 'Витамин C', expirationDate: '2026-01-10', quantity: 5 },
-    { id: '16', name: 'Но-шпа', expirationDate: '2024-05-10', quantity: 1, category: 'Спазмолитики' },
-];
-
 export default function MedicineListPage() {
-    const [medicines, setMedicines] = useState(mockMedicines);
     const navigation = useNavigation();
 
     return (
@@ -70,57 +49,6 @@ const localStyles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: 16,
         paddingHorizontal: 16,
-    },
-    stats: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginHorizontal: 16,
-        marginBottom: 12,
-        gap: 12,
-    },
-    empty: {
-        textAlign: 'center',
-        color: Colors.textSecondary,
-        marginTop: 20,
-        fontStyle: 'italic',
-    },
-    listItem: {
-        flexDirection: 'row',
-        height: 56,
-        borderRadius: 8,
-        marginBottom: 8,
-        overflow: 'hidden', // обрезаем градиент по углам
-        elevation: 1,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.08,
-        shadowRadius: 2,
-        marginHorizontal: 16,
-        position: 'relative', // обязательно для absoluteFillObject
-        backgroundColor: 'transparent', // фон задаётся градиентом
-    },
-    statusIndicator: {
-        width: 200,
-        alignSelf: 'stretch',
-    },
-    itemContent: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        // ✅ Убираем paddingHorizontal отсюда, он теперь в listItem
-    },
-    itemName: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: Colors.text,
-        flex: 1,
-    },
-    itemMeta: {
-        fontSize: 14,
-        color: Colors.textSecondary,
-        marginLeft: 16,
-        fontWeight: '500',
     },
     addButton: {
         position: 'absolute',

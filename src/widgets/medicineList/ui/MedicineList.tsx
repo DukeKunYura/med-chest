@@ -57,6 +57,7 @@ export const MedicineList = () => {
                     onPress={() => {
                         Alert.alert('Подробнее', `${item.name}\nСрок: ${item.expirationDate}`);
                     }}
+                    onDelete={handleDelete}
                 />
             )}
             contentContainerStyle={localStyles.list}
